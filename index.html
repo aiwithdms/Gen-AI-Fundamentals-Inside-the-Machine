@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Module 2 — Generative AI & Large Language Models</title>
+<style>
+:root{--bg:#0a0724;--bg2:#120c3a;--fg:#f5f3ff;--mut:#c4bef0;--card:rgba(255,255,255,.08);--bd:rgba(255,255,255,.18);--pink:#ff3d9a;--cy:#22e4ff;--am:#ffb020;--vi:#8a6bff;--gr:#5cf2a0;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#f6f4ff;--bg2:#ebe6ff;--fg:#17123d;--mut:#463f7a;--card:rgba(255,255,255,.85);--bd:rgba(23,18,61,.2)}}
+:root[data-theme="light"]{--bg:#f6f4ff;--bg2:#ebe6ff;--fg:#17123d;--mut:#463f7a;--card:rgba(255,255,255,.85);--bd:rgba(23,18,61,.2)}
+:root[data-theme="dark"]{--bg:#0a0724;--bg2:#120c3a;--fg:#f5f3ff;--mut:#c4bef0;--card:rgba(255,255,255,.08);--bd:rgba(255,255,255,.18)}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:calc(70px + env(safe-area-inset-top,0px))}
+body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.65 "Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;overflow-x:hidden}
+h1,h2,h3{line-height:1.1;margin:0 0 .5em;letter-spacing:-.02em}h1{font-size:clamp(2.4rem,7vw,5rem);font-weight:900}h2{font-size:clamp(1.8rem,4.5vw,3rem);font-weight:800}h3{font-size:1.2rem}
+p{max-width:70ch;margin:0 0 1em;color:var(--mut)}a{color:var(--cy)}:focus-visible{outline:3px solid var(--am);outline-offset:3px;border-radius:8px}
+.g{background:linear-gradient(90deg,var(--pink),var(--am),var(--cy));-webkit-background-clip:text;background-clip:text;color:transparent}
+#pb{position:fixed;top:env(safe-area-inset-top,0px);left:0;height:4px;width:0;background:linear-gradient(90deg,var(--pink),var(--am),var(--cy));z-index:30}
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;display:flex;gap:6px;align-items:center;padding:10px 18px;background:color-mix(in srgb,var(--bg) 85%,transparent);backdrop-filter:blur(14px);border-bottom:1px solid var(--bd);overflow-x:auto}
+nav b{margin-right:auto;white-space:nowrap}nav a{color:var(--fg);text-decoration:none;padding:8px 13px;border-radius:99px;font-size:.92rem;white-space:nowrap}nav a:hover{background:var(--card)}
+.sec{max-width:1120px;margin:0 auto;padding:84px 20px}
+.hero{position:relative;min-height:90vh;display:grid;place-items:center;text-align:center;overflow:hidden;background:radial-gradient(900px 500px at 15% 10%,rgba(255,61,154,.38),transparent 60%),radial-gradient(900px 600px at 88% 90%,rgba(34,228,255,.32),transparent 60%),radial-gradient(700px 500px at 60% 30%,rgba(138,107,255,.38),transparent 60%),var(--bg)}
+#cv{position:absolute;inset:0;width:100%;height:100%}.hero>div{position:relative;padding:20px;max-width:920px}.hero p{margin:0 auto 1.4em;font-size:1.15rem;color:var(--fg)}
+.btn{display:inline-block;border:0;cursor:pointer;font:inherit;font-weight:700;color:#14103a;background:linear-gradient(90deg,var(--am),var(--pink));padding:14px 26px;border-radius:99px;text-decoration:none;transition:transform .2s;box-shadow:0 8px 30px rgba(255,61,154,.4);margin:4px}.btn:hover{transform:translateY(-2px)}.btn.o{background:transparent;color:var(--fg);border:2px solid var(--bd);box-shadow:none}
+.chips{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:22px}.chips span{padding:6px 14px;border-radius:99px;border:1px solid var(--bd);background:var(--card);font-size:.9rem}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:20px;padding:24px;backdrop-filter:blur(8px)}
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0}.tabs button{font:inherit;cursor:pointer;color:var(--fg);background:var(--card);border:1px solid var(--bd);border-radius:99px;padding:10px 18px}.tabs button[aria-selected=true]{background:var(--c,var(--vi));color:#14103a;font-weight:700;border-color:transparent}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}@media(max-width:760px){.two{grid-template-columns:1fr}}.pg{border-top:6px solid var(--c)}.big{font-size:2.6rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px}
+.cc{cursor:pointer;text-align:left;font:inherit;color:var(--fg);border-top:5px solid var(--c);transition:transform .2s}.cc:hover{transform:translateY(-4px)}.cc .more{display:none;color:var(--mut);margin-top:10px}.cc[aria-expanded=true] .more{display:block}.cc .ic{font-size:2rem}
+.gwrap{margin-top:44px;border-radius:28px;padding:26px;border:1px solid var(--bd);background:linear-gradient(135deg,rgba(138,107,255,.25),rgba(255,61,154,.16),rgba(34,228,255,.2))}
+.how{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin:14px 0}.how div{background:var(--card);border-radius:14px;padding:12px 14px;font-size:.95rem;color:var(--fg)}.how b{color:var(--am)}
+#gal{display:block;width:100%;height:clamp(360px,62vh,540px);border-radius:20px;background:radial-gradient(circle at 50% 45%,#2a1d6e,#0a0724 75%);touch-action:pan-y;cursor:grab}
+#gi{margin:12px 0 0;padding:12px 16px;border-radius:14px;background:rgba(0,0,0,.28);color:#f5f3ff;min-height:52px}
+.lab{background:linear-gradient(135deg,rgba(138,107,255,.25),rgba(255,61,154,.18),rgba(34,228,255,.2));border-radius:28px;padding:26px;border:1px solid var(--bd)}
+.lab input{width:100%;font:inherit;color:var(--fg);background:rgba(0,0,0,.28);border:2px solid var(--bd);border-radius:14px;padding:14px;margin-bottom:12px}
+.steps{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:22px 0}@media(max-width:760px){.steps{grid-template-columns:1fr 1fr}}
+.st{padding:10px;border-radius:14px;border:2px solid var(--bd);text-align:center;font-weight:700;font-size:.9rem;opacity:.55;transition:.4s}.st.on{opacity:1;border-color:var(--c);background:color-mix(in srgb,var(--c) 30%,transparent);transform:scale(1.05)}
+.panel{min-height:70px;padding:16px;border-radius:16px;background:rgba(0,0,0,.25);margin-bottom:12px;color:#f5f3ff}.panel small{display:block;color:#c4bef0;margin-bottom:8px}
+.tk{display:inline-block;margin:3px;padding:4px 10px;border-radius:8px;font-family:Consolas,monospace;font-size:.9rem;color:#14103a;animation:pop .4s both}.tk i{font-style:normal;opacity:.65;font-size:.72rem;margin-left:6px}@keyframes pop{from{transform:scale(.3);opacity:0}}
+.net{display:flex;gap:6px;justify-content:center;align-items:center}.net u{width:12px;border-radius:6px;background:var(--cy);animation:pl 1s infinite alternate;height:40px}@keyframes pl{to{height:12px;background:var(--pink)}}
+.bar{display:flex;align-items:center;gap:10px;margin:6px 0}.bar span:first-child{width:90px;font-family:Consolas,monospace}.bar div{height:16px;border-radius:8px;background:linear-gradient(90deg,var(--vi),var(--pink));transition:width 1s;width:0}
+.q button{display:block;width:100%;text-align:left;font:inherit;color:var(--fg);background:var(--card);border:2px solid var(--bd);border-radius:14px;padding:12px 16px;margin:8px 0;cursor:pointer}.q button.ok{border-color:var(--gr);background:rgba(92,242,160,.2)}.q button.no{border-color:var(--pink);background:rgba(255,61,154,.2)}
+details{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:12px 16px;margin:8px 0}summary{cursor:pointer;font-weight:700}details p{margin:8px 0 0}
+.rg{margin-top:34px}.rs a.card{display:block;text-decoration:none;color:var(--fg);border-left:6px solid var(--c);height:100%}.rs a.card:hover{transform:translateY(-3px)}.rs span{color:var(--mut);font-size:.92rem}.tag{display:inline-block;font-size:.75rem;padding:2px 10px;border-radius:99px;background:var(--c);color:#14103a;font-weight:700;margin-bottom:6px}
+.li{display:inline-flex;gap:10px;align-items:center;background:#0a66c2;color:#fff;text-decoration:none;font-weight:700;padding:13px 24px;border-radius:99px}
+footer{background:var(--bg2);border-top:1px solid var(--bd);padding:50px 20px}footer .in{max-width:1120px;margin:0 auto}footer p{font-size:.88rem;max-width:90ch}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div id="pb"></div>
+<nav aria-label="Main"><b class="g">Module 2</b><a href="#s1">2.1 Generative AI</a><a href="#s2">2.2 LLMs</a><a href="#s3">2.3 How it works</a><a href="#quiz">Quiz</a><a href="#gloss">Glossary</a><a href="#res">Resources</a><a href="#about">About</a><a href="#legal">Disclaimer</a></nav>
+
+<header class="hero"><canvas id="cv" aria-hidden="true"></canvas>
+<div><h1>Generative AI <span class="g">&amp; Large Language Models</span></h1>
+<p>See how a prompt becomes tokens, tokens become a prediction, and a prediction becomes an answer. Explore it, test yourself, then go deeper with trusted sources.</p>
+<a class="btn" href="#s3">Run the live visualization</a><a class="btn o" href="#s1">Start with the basics</a>
+<div class="chips"><span>Text</span><span>Image</span><span>Audio</span><span>Video</span><span>Multimodal</span></div></div></header>
+
+<section class="sec" id="s1"><h2>2.1 What is <span class="g">Generative AI?</span></h2>
+<p>Two families of AI do very different jobs. Choose one to compare.</p>
+<div class="tabs" role="tablist" id="pg"></div><div class="two" id="pgv"></div>
+<h3 style="margin-top:44px">Modalities: what can it create?</h3>
+<div class="tabs" role="tablist" id="mt"></div><div class="card pg" id="mv" aria-live="polite"></div></section>
+
+<section class="sec" id="s2"><h2>2.2 Understanding <span class="g">LLMs</span></h2>
+<p>Eight ideas explain most of what you need. Select a card to open it.</p><div class="grid" id="cc"></div>
+<div class="gwrap"><h3>Token galaxy: how a model sees meaning</h3>
+<p>Inside a model, every word becomes a point in space. Words used in similar ways land close together. This is a simplified 3D picture; real models use hundreds or thousands of dimensions.</p>
+<div class="how"><div><b>1. Look</b><br>Each colour is a group of related words.</div><div><b>2. Drag</b><br>Swipe or drag to turn the galaxy around.</div><div><b>3. Tap a word</b><br>Lines show its three closest neighbours.</div></div>
+<div class="tabs" id="gt"></div><canvas id="gal" role="img" aria-label="Interactive 3D map of related words. Tap a word to see its nearest neighbours."></canvas><p id="gi" aria-live="polite">Tap any word to see what sits closest to it.</p></div></section>
+
+<section class="sec" id="s3"><h2>2.3 How ChatGPT-type AI <span class="g">works</span></h2>
+<p>Prompt → Tokens → Model → Prediction → Response. Type a prompt, then press Run.</p>
+<div class="lab"><label for="pi">Your prompt</label><input id="pi" value="The capital of the UAE is" maxlength="80">
+<button class="btn" id="run">Run</button><button class="btn o" id="ex">Try another prompt</button>
+<div class="steps" id="steps"></div>
+<div class="panel"><small>Tokens: the text split into pieces, each with a number ID</small><div id="tk">Press Run to begin.</div></div>
+<div class="panel"><small>Model: billions of parameters score every possible next token</small><div class="net" id="net" aria-hidden="true"></div></div>
+<div class="panel"><small>Prediction: the most likely next tokens</small><div id="pr"></div></div>
+<div class="panel"><small>Response: one token is chosen, added to the text, and the loop repeats</small><div id="out" aria-live="polite"></div></div></div>
+<h3 style="margin-top:34px">Try the real thing</h3><p>These free tools open in a new tab. Use them after the demo above.</p>
+<a class="btn" href="https://poloclub.github.io/transformer-explainer/" target="_blank" rel="noopener noreferrer">Transformer Explainer</a><a class="btn o" href="https://bbycroft.net/llm" target="_blank" rel="noopener noreferrer">LLM Visualization (3D)</a><a class="btn o" href="https://platform.openai.com/tokenizer" target="_blank" rel="noopener noreferrer">OpenAI Tokenizer</a></section>
+
+<section class="sec" id="quiz"><h2>Check your <span class="g">understanding</span></h2><div class="card q" id="qz"></div></section>
+<section class="sec" id="gloss"><h2>Module 2 <span class="g">glossary</span></h2><div id="gl"></div></section>
+<section class="sec" id="res"><h2>Trusted <span class="g">study resources</span></h2><p>Each link opens the publisher's own site in a new tab. Tags show whether a source is interactive, a video, documentation, a vendor page or an independent source.</p><div id="rs"></div></section>
+
+<section class="sec" id="about"><div class="card"><h2>About the <span class="g">presenter</span></h2>
+<p><b>D. Meenakshi Sundaram (DMS)</b> — AI Adoption &amp; Developer Productivity Consultant. Founder of CIIS (Computational Intelligence &amp; Innovative Solutions) and DMS Academy, serving enterprise and government clients across the UAE, GCC and India.</p>
+<a class="li" href="https://www.linkedin.com/in/dmsmtech" target="_blank" rel="noopener noreferrer" aria-label="Open DMS on LinkedIn (opens in a new tab)"><svg width="22" height="22" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.5h4V21H3zM9.5 9.5h3.8v1.6h.1c.5-1 1.8-2 3.8-2 4 0 4.8 2.6 4.8 6V21h-4v-5c0-1.2 0-2.8-1.7-2.8s-2 1.3-2 2.7V21h-4z"/></svg>Connect on LinkedIn</a></div></section>
+
+<footer id="legal"><div class="in"><h3>Disclaimer</h3>
+<p>This website is provided for educational and informational purposes only. Content is a simplified conceptual illustration; the interactive demonstrations use sample data and do not call or represent any actual AI model. It does not constitute professional, legal, financial or technical advice, and no warranty is given as to completeness or accuracy. Third-party product names and trademarks belong to their respective owners, and listing a resource does not imply affiliation with or endorsement of any vendor. Resource links lead to external sites whose content and availability may change and are governed by their own terms. Use of AI systems should comply with applicable UAE federal and emirate-level laws and regulations.</p>
+<p>The presenter, CIIS and DMS Academy accept no liability for any loss or damage arising from reliance on this content.</p>
+<h3>Copyright</h3>
+<p>© 2026 CIIS — Computational Intelligence &amp; Innovative Solutions, Sharjah, United Arab Emirates, and DMS Academy. All rights reserved. No part of this website may be reproduced, distributed, or used for commercial purposes without prior written permission. This notice is governed by the laws of the United Arab Emirates.</p></div></footer>
+
+<script>
+const $=s=>document.querySelector(s),C=["#ff3d9a","#22e4ff","#ffb020","#8a6bff","#5cf2a0"];
+addEventListener("scroll",()=>{$("#pb").style.width=(scrollY/Math.max(1,document.body.scrollHeight-innerHeight)*100)+"%"});
+(function(){const c=$("#cv"),x=c.getContext("2d");let w,h,P=[];function r(){w=c.width=c.offsetWidth;h=c.height=c.offsetHeight;P=Array.from({length:Math.min(70,w/16)},()=>({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-.5)*.5,vy:(Math.random()-.5)*.5,c:C[Math.random()*5|0]}))}
+r();addEventListener("resize",r);const rm=matchMedia("(prefers-reduced-motion:reduce)").matches;
+function f(){x.clearRect(0,0,w,h);P.forEach((p,i)=>{if(!rm){p.x=(p.x+p.vx+w)%w;p.y=(p.y+p.vy+h)%h}for(let j=i+1;j<P.length;j++){const q=P[j],d=Math.hypot(p.x-q.x,p.y-q.y);if(d<130){x.strokeStyle=p.c;x.globalAlpha=(1-d/130)*.5;x.beginPath();x.moveTo(p.x,p.y);x.lineTo(q.x,q.y);x.stroke()}}x.globalAlpha=1;x.fillStyle=p.c;x.beginPath();x.arc(p.x,p.y,3,0,7);x.fill()});requestAnimationFrame(f)}f()})();
+function tabs(el,items,fn){el.innerHTML="";items.forEach((t,i)=>{const b=document.createElement("button");b.setAttribute("role","tab");b.textContent=t.n;b.style.setProperty("--c",t.c);b.onclick=()=>{[...el.children].forEach(k=>k.setAttribute("aria-selected",k===b));fn(t)};el.appendChild(b);if(!i)b.click()})}
+const PG=[{n:"Predictive AI",c:C[1],i:"🎯",h:"Predicts a label or number",t:"Looks at past data and answers a question with a score or category.",e:"Will this customer cancel? Answer: 87% likely."},{n:"Generative AI",c:C[0],i:"✨",h:"Creates new content",t:"Learns patterns from huge datasets, then produces new text, images, audio or video.",e:"Write a retention email. Answer: a brand-new draft."}];
+tabs($("#pg"),[{n:"Side by side",c:C[3]},...PG],t=>{const L=t.n==="Side by side"?PG:[t];$("#pgv").innerHTML=L.map(p=>`<div class="card pg" style="--c:${p.c}"><div class="big">${p.i}</div><h3>${p.n}: ${p.h}</h3><p>${p.t}</p><p><b style="color:var(--fg)">Example:</b> ${p.e}</p></div>`).join("")});
+const M=[{n:"Text",c:C[0],i:"📝",t:"Writes, summarizes, translates and answers questions.",e:"Drafting a policy summary in seconds."},{n:"Image",c:C[1],i:"🎨",t:"Turns a written description into a picture or edits an existing one.",e:"A marketing visual from one sentence."},{n:"Audio",c:C[2],i:"🎧",t:"Creates speech, voice-overs and music, or transcribes recordings.",e:"A narrated training clip in several languages."},{n:"Video",c:C[3],i:"🎬",t:"Builds short clips from prompts or animates still images.",e:"A product explainer from a storyboard."},{n:"Multimodal",c:C[4],i:"🧩",t:"One model understands and mixes text, images, audio and video together.",e:"Upload a chart and ask for a written insight."}];
+tabs($("#mt"),M,m=>{const v=$("#mv");v.style.setProperty("--c",m.c);v.innerHTML=`<div class="big">${m.i}</div><h3>${m.n} generation</h3><p>${m.t}</p><p><b style="color:var(--fg)">Example:</b> ${m.e}</p>`});
+const K=[["🔤","Tokens","Small pieces of text, such as a word or part of a word.","Like Lego bricks: the model reads and writes one brick at a time."],["🧠","Context","Everything the model can see at once: your prompt, history and any documents.","Its working desk. Anything that falls off the desk is forgotten."],["🎛️","Parameters","Billions of numeric settings that store what the model learned.","Like the dials on a huge mixing console."],["📚","Training","The model reads vast amounts of text and adjusts its parameters to predict the next token better.","Years of reading, compressed into numbers."],["⚡","Inference","Using the trained model to answer your prompt, one token at a time.","The exam day after all the studying."],["🏛️","Foundation models","Large general-purpose models that can be adapted to many tasks.","A well-educated graduate who can learn any job quickly."],["💪","Capabilities","Drafting, summarizing, translating, coding and explaining.","Fast first drafts and pattern spotting at scale."],["⚠️","Limitations","It can state wrong facts with confidence, reflect bias in data, and has a knowledge cutoff.","Always verify important outputs and keep a human in charge."]];
+$("#cc").innerHTML=K.map((k,i)=>`<button class="card cc" style="--c:${C[i%5]}" aria-expanded="false"><div class="ic">${k[0]}</div><h3>${k[1]}</h3><span style="color:var(--mut)">${k[2]}</span><div class="more"><b style="color:var(--fg)">Think of it as:</b> ${k[3]}</div></button>`).join("");
+document.querySelectorAll(".cc").forEach(b=>b.onclick=()=>b.setAttribute("aria-expanded",b.getAttribute("aria-expanded")!=="true"));
+// token galaxy (canvas 3D projection, no external library)
+(function(){const cv=$("#gal"),x=cv.getContext("2d");
+const CL=[{n:"UAE cities",c:"#ff3d9a",p:[-2.4,1.2,.5],w:["Dubai","Abu Dhabi","Sharjah","Ajman","Al Ain"]},{n:"AI terms",c:"#22e4ff",p:[2.4,1,-.8],w:["model","token","prompt","neural net","agent","training"]},{n:"Food and drink",c:"#ffb020",p:[-1.8,-1.6,-.6],w:["coffee","dates","tea","rice","bread"]},{n:"Job roles",c:"#5cf2a0",p:[2,-1.5,.8],w:["manager","engineer","doctor","teacher","analyst"]}];
+let s=11;const rnd=()=>(s=(s*16807)%2147483647)/2147483647-.5,P=[];
+CL.forEach((k,ci)=>k.w.forEach(w=>P.push({w,ci,c:k.c,x:k.p[0]+rnd()*1.7,y:k.p[1]+rnd()*1.5,z:k.p[2]+rnd()*1.7})));
+let ry=.5,rx=.25,drag=0,mv=0,px=0,py=0,sel=-1,pick=null,W=0,H=0,S=[];const rm=matchMedia("(prefers-reduced-motion:reduce)").matches;
+function size(){const r=cv.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,2);W=r.width;H=r.height;cv.width=W*d;cv.height=H*d;x.setTransform(d,0,0,d,0,0)}
+function pr(p){const cy=Math.cos(ry),sy=Math.sin(ry),cx=Math.cos(rx),sx=Math.sin(rx);const X=p.x*cy+p.z*sy;let Z=-p.x*sy+p.z*cy;const Y=p.y*cx-Z*sx;Z=p.y*sx+Z*cx;const f=1/(1+Z*.1),k=Math.min(W,H*1.6)/7;return{p,sx:W/2+X*k*f,sy:H/2+Y*k*f,f,z:Z}}
+function draw(){if(!W)size();x.clearRect(0,0,W,H);if(!drag&&!rm)ry+=.003;S=P.map(pr);const near=[];
+if(pick){S.filter(a=>a.p!==pick.p).map(a=>({a,d:Math.hypot(a.p.x-pick.p.x,a.p.y-pick.p.y,a.p.z-pick.p.z)})).sort((u,v)=>u.d-v.d).slice(0,3).forEach(n=>near.push(n.a))}
+near.forEach(a=>{x.strokeStyle="#ffffff";x.lineWidth=2;x.globalAlpha=.8;x.setLineDash([6,5]);x.beginPath();x.moveTo(pick.sx,pick.sy);x.lineTo(a.sx,a.sy);x.stroke()});x.setLineDash([]);
+S.slice().sort((a,b)=>b.z-a.z).forEach(a=>{const dim=sel>=0&&a.p.ci!==sel,hot=pick&&(a.p===pick.p||near.includes(a));x.globalAlpha=dim?.15:Math.min(1,.45+a.f*.55);x.fillStyle=a.p.c;x.shadowColor=a.p.c;x.shadowBlur=hot?28:12;x.beginPath();x.arc(a.sx,a.sy,(hot?10:6)*a.f+2,0,7);x.fill();x.shadowBlur=0;
+x.font=(hot?"800 ":"700 ")+Math.round(13+5*a.f)+"px Segoe UI,Arial,sans-serif";x.textAlign="center";x.fillStyle="#fff";x.fillText(a.p.w,a.sx,a.sy-14*a.f-4)});x.globalAlpha=1;requestAnimationFrame(draw)}
+addEventListener("resize",size);cv.onpointerdown=e=>{drag=1;mv=0;px=e.clientX;py=e.clientY;cv.style.cursor="grabbing"};
+addEventListener("pointermove",e=>{if(!drag)return;mv+=Math.abs(e.clientX-px)+Math.abs(e.clientY-py);ry+=(e.clientX-px)*.008;rx=Math.max(-1.2,Math.min(1.2,rx+(e.clientY-py)*.005));px=e.clientX;py=e.clientY});
+addEventListener("pointerup",e=>{if(!drag)return;drag=0;cv.style.cursor="grab";if(mv>6)return;const r=cv.getBoundingClientRect(),mx=e.clientX-r.left,my=e.clientY-r.top;let b=null,bd=34;S.forEach(a=>{const d=Math.hypot(a.sx-mx,a.sy-my);if(d<bd){bd=d;b=a}});pick=b;
+$("#gi").textContent=b?"Closest to "+b.p.w+": "+S.filter(a=>a!==b).map(a=>({w:a.p.w,d:Math.hypot(a.p.x-b.p.x,a.p.y-b.p.y,a.p.z-b.p.z)})).sort((u,v)=>u.d-v.d).slice(0,3).map(n=>n.w).join(", ")+". Nearby points mean similar usage.":"Tap any word to see what sits closest to it."});
+tabs($("#gt"),[{n:"All groups",c:C[3],i:-1},...CL.map((k,i)=>({n:k.n,c:k.c,i}))],t=>{sel=t.i});size();draw()})();
+// pipeline
+const S5=["1 Prompt","2 Tokens","3 Model","4 Prediction","5 Response"];
+$("#steps").innerHTML=S5.map((s,i)=>`<div class="st" style="--c:${C[i]}">${s}</div>`).join("");
+$("#net").innerHTML=Array.from({length:14},(_,i)=>`<u style="animation-delay:${(i%7)*.12}s"></u>`).join("");
+const PR=[[/capital|uae|emirates/i,[["Abu",62],["Dubai",21],["the",9],["Sharjah",5],["a",3]],"Abu Dhabi, a city on the Arabian Gulf, is the capital of the UAE. Dubai is its best-known commercial hub."],[/hello|hi\b|hey/i,[["there",48],["!",22],["team",12],["friend",10],[",",8]],"Hello there! How can I help you today?"],[/ai|llm|model/i,[["is",44],["can",25],["learns",14],["helps",10],["uses",7]],"AI is a set of tools that learn patterns from data, helping people work faster while humans stay accountable for decisions."],[/./,[["the",40],["a",22],["to",15],["and",12],["of",11]],"Here is a clear answer, built one token at a time: each new word is chosen by probability, then added to the text."]];
+const EX=["The capital of the UAE is","Hello","Explain AI in one line","Summarize why context matters"];let ei=0,busy=false;
+const tok=t=>t.match(/[A-Za-z]{1,5}|\d+|[^\sA-Za-z\d]|\s+[A-Za-z]{1,5}/g)||[],id=s=>[...s].reduce((a,c)=>(a*31+c.charCodeAt(0))%50000,7),sl=ms=>new Promise(r=>setTimeout(r,ms));
+$("#ex").onclick=()=>{$("#pi").value=EX[++ei%EX.length];run()};$("#run").onclick=run;
+async function run(){if(busy)return;busy=true;const v=$("#pi").value.trim()||"Hello",st=[...document.querySelectorAll(".st")],on=n=>st.forEach((s,i)=>s.classList.toggle("on",i===n));
+$("#tk").textContent="";$("#pr").innerHTML="";$("#out").textContent="";on(0);await sl(500);on(1);
+for(const [i,t] of tok(v).entries()){const s=document.createElement("span");s.className="tk";s.style.background=C[i%5];s.innerHTML=`${t.replace(/ /g,"·")}<i>${id(t)}</i>`;$("#tk").appendChild(s);await sl(120)}
+on(2);await sl(1400);on(3);const R=PR.find(r=>r[0].test(v));
+$("#pr").innerHTML=R[1].map(p=>`<div class="bar"><span>${p[0]}</span><div data-w="${p[1]*1.4}"></div><span>${p[1]}%</span></div>`).join("");
+await sl(60);document.querySelectorAll(".bar div").forEach(d=>d.style.width=d.dataset.w+"%");await sl(1300);
+on(4);const o=$("#out");o.textContent=v+" ";for(const w of R[2].split(" ")){o.textContent+=w+" ";await sl(70)}busy=false}
+// quiz
+const Q=[["Which task is an example of generative AI?",["Scoring whether a loan will default","Writing a new product description","Sorting emails by sender","Flagging a duplicate invoice"],1,"Generative AI creates new content. The others predict or classify existing data."],["What is a token?",["A security password","A small piece of text the model reads and writes","A paid credit","A type of image"],1,"Models split text into tokens, such as whole words or word parts."],["What does inference mean?",["Training the model on new data","Using a trained model to produce an answer","Deleting old data","Checking the internet"],1,"Training teaches the model. Inference is using it."],["Which is a known limitation of LLMs?",["They never make mistakes","They can state wrong facts confidently","They only work in English","They cannot read text"],1,"Outputs need human checking, especially for facts and decisions."],["What is the correct order of the journey?",["Response, Model, Prompt, Tokens, Prediction","Prompt, Tokens, Model, Prediction, Response","Tokens, Prompt, Response, Model, Prediction","Prompt, Model, Tokens, Response, Prediction"],1,"Prompt, Tokens, Model, Prediction, Response, then the loop repeats for each new token."]];
+let qi=0,qs=0;function showQ(){const e=$("#qz");e.dataset.d="";if(qi>=Q.length){e.innerHTML=`<h3>Your score: ${qs} of ${Q.length}</h3><p>${qs>=4?"Strong result. You are ready for the next module.":"Revisit sections 2.2 and 2.3, then try again."}</p><button class="btn" id="rq">Try again</button>`;$("#rq").onclick=()=>{qi=qs=0;showQ()};return}
+const q=Q[qi];e.innerHTML=`<p>Question ${qi+1} of ${Q.length}</p><h3>${q[0]}</h3>`+q[1].map((o,i)=>`<button data-i="${i}">${o}</button>`).join("")+`<div id="fb" aria-live="polite"></div>`;
+e.querySelectorAll("button").forEach(b=>b.onclick=()=>{if(e.dataset.d==="1")return;e.dataset.d="1";const i=+b.dataset.i;if(i===q[2])qs++;e.querySelectorAll("button").forEach((x,j)=>x.className=j===q[2]?"ok":(j===i?"no":""));$("#fb").innerHTML=`<p style="margin-top:10px">${i===q[2]?"Correct. ":"Not quite. "}${q[3]}</p><button class="btn" id="nx">${qi<Q.length-1?"Next question":"See score"}</button>`;$("#nx").onclick=()=>{qi++;showQ()}})}showQ();
+// glossary
+$("#gl").innerHTML=[["Generative AI","AI that creates new text, images, audio or video."],["Predictive AI","AI that forecasts a number or label from past data."],["LLM","A large language model trained on vast text to predict the next token."],["Token","A small chunk of text the model processes."],["Context window","The amount of text the model can consider at once."],["Parameters","The learned numeric settings inside a model."],["Training","The learning phase that adjusts parameters using data."],["Inference","Running a trained model to get an output."],["Foundation model","A large general model adaptable to many tasks."],["Multimodal","Able to work with more than one type of content."],["Hallucination","A fluent but incorrect or invented answer."],["Embedding","A list of numbers that places a token in meaning space."],["Prompt","The instruction or question you give the model."]].map(g=>`<details><summary>${g[0]}</summary><p>${g[1]}</p></details>`).join("");
+// resources
+const RS=[["Try it live",[["Transformer Explainer","Run a real GPT-2 model in your browser and watch attention and next-token prediction. Georgia Tech.","https://poloclub.github.io/transformer-explainer/","Interactive"],["LLM Visualization","A 3D walkthrough of a GPT-style model, step by step.","https://bbycroft.net/llm","Interactive"],["Diffusion Explainer","See how Stable Diffusion turns a text prompt into an image. Georgia Tech and IBM Research.","https://poloclub.github.io/diffusion-explainer/","Interactive"],["OpenAI Tokenizer","Paste text and see exactly how it splits into tokens.","https://platform.openai.com/tokenizer","Vendor tool"]]],
+["Understand the concepts",[["3Blue1Brown: But what is a GPT?","A visual, beginner-friendly lesson on how transformers work.","https://www.3blue1brown.com/lessons/gpt","Video"],["Google Machine Learning Crash Course","Free course with exercises, now including large language models.","https://developers.google.com/machine-learning/crash-course","Course"],["Stanford CRFM","Where the term foundation model comes from.","https://crfm.stanford.edu/","Academic"],["IBM: What are foundation models?","A plain-language explainer.","https://www.ibm.com/topics/foundation-models","Vendor"],["IBM: What is multimodal AI?","Explains models that handle text, images, audio and video.","https://www.ibm.com/think/topics/multimodal-ai","Vendor"],["Red Hat: Predictive vs generative AI","A clear side-by-side comparison.","https://redhat.com/en/topics/ai/predictive-ai-vs-generative-ai","Vendor"]]],
+["Context, models and limits",[["Claude docs: Context windows","Read the first section for context as working memory and why more is not always better.","https://platform.claude.com/docs/en/build-with-claude/context-windows","Vendor docs"],["OpenAI: Compare models","Real examples of context size, knowledge cutoff and pricing. Figures change often.","https://developers.openai.com/api/docs/models/compare","Vendor docs"],["OpenAI: Why language models hallucinate","Why confident wrong answers happen.","https://openai.com/index/why-language-models-hallucinate/","Vendor research"]]],
+["Courses and governance",[["Microsoft Learn: AI training","Free learning paths on generative AI and Copilot.","https://learn.microsoft.com/training/","Course"],["NVIDIA Deep Learning Institute","Courses on deep learning and generative AI.","https://www.nvidia.com/en-us/training/","Course"],["UAE AI portal","UAE government hub for AI strategy and initiatives.","https://ai.gov.ae/","Government"],["NIST AI Risk Management Framework","Trusted framework for managing AI risk.","https://www.nist.gov/itl/ai-risk-management-framework","Standard"],["ISO/IEC 42001","International standard for AI management systems.","https://www.iso.org/standard/81230.html","Standard"]]]];
+$("#rs").innerHTML=RS.map((g,gi)=>`<div class="rg"><h3>${g[0]}</h3><div class="grid rs">${g[1].map((r,i)=>`<a class="card" style="--c:${C[(gi+i)%5]}" href="${r[2]}" target="_blank" rel="noopener noreferrer"><span class="tag">${r[3]}</span><br><b>${r[0]}</b><br><span>${r[1]}</span></a>`).join("")}</div></div>`).join("");
+</script>
+</body>
+</html>
